@@ -34,8 +34,6 @@ const getChatType = (text) => {
 
 app.get('/info/:entity', async (req, res) => {
    const entity = req.params.entity;
-   if (entity.length < 5)
-      return res.json({ message: 'not a valid username' }).status(400);
    var chatURL = `https://telegram.me/${entity}`;
    const response = await axios.get(chatURL);
    const $ = cheerio.load(response.data);
@@ -57,7 +55,7 @@ app.get('/info/:entity', async (req, res) => {
       data.link = chatURL;
       res.json(data);
    } else {
-      res.json({ message: 'something went wrong' }).status(500);
+      res.json({ message: 'invalid entity' }).status(400);
    }
 })
 
